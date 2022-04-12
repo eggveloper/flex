@@ -1,9 +1,10 @@
 #include "engine.hpp"
+#include "texture.hpp"
+#include "../log/log.hpp"
 
 #include <stdio.h>
 #include <GL/gl.h>
 
-#include "texture.hpp"
 
 namespace flex {
 namespace engine {
@@ -20,7 +21,7 @@ bool running;
 
 void init(draw_method_ptr draw_method, input_handler_ptr input_handler) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL Initialization: %s\n", SDL_GetError());
+        log::fatal("SDL Initialization: %s\n", SDL_GetError());
 
         return;
     }
@@ -33,7 +34,7 @@ void init(draw_method_ptr draw_method, input_handler_ptr input_handler) {
     window = SDL_CreateWindow("flex", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
 
     if (window == nullptr) {
-        printf("SDL Window Creation: %s\n", SDL_GetError());
+        log::fatal("SDL Window Creation: %s\n", SDL_GetError());
 
         return;
     }
@@ -57,7 +58,7 @@ void destroy() {
 }
 
 void engine_window_resized(unsigned w, unsigned h) {
-    printf("engine window has been resized to %ux%u\n", w, h);
+    log::dbg("engine window has been resized to %ux%u\n", w, h);
 }
 
 void engine_input_handler(SDL_Event* e) {

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "texture.hpp"
+#include "../log/log.hpp"
 
 namespace flex {
 namespace engine {
@@ -11,16 +12,14 @@ Texture::Texture(const char* filename) {
     GLuint textureid;
     int mode;
 
-    printf("generating texture %s\n", filename);
-
     surface = SDL_LoadBMP(filename);
 
     if (!surface) {
-        printf("failed generating texture %s\n", filename);
+        log::warn("failed generating texture %s\n", filename);
 
         return;
     } else {
-        printf("created texture %s successfully\n", filename);
+        log::msg("loaded texture from '%s'\n", filename);
     }
 
     // glTexImage2D format determination
